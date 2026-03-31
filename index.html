@@ -1,0 +1,180 @@
+I see exactly what happened! Looking at the link https://albaqir7.github.io/Vibero/, your website is currently just showing the contents of a README.md file instead of your app. This happens because GitHub automatically displays the README if it can’t find a file named index.html.
+
+The Issue: Your repository either doesn’t have an index.html file yet, or the file is inside a folder. GitHub Pages needs the file to be in the main (root) folder of the repository to work.
+
+Here is the “Emergency Fix” to get your app live:
+Open your GitHub Repository (Vibero).
+Click Add file -> Upload files.
+Upload the Fixed Code below. IMPORTANT: You must name the file index.html (all lowercase, no spaces).
+Once uploaded, click Commit changes.
+Wait 60 seconds, then refresh your link.
+Copy this Perfect Code for your index.html:
+This version has the Black Background Force-Fix, the 7+ Age Limit, and the Halo-Free Hair.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibero | Next-Gen 3D Social</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000; --accent-cyan: #00ffff; --accent-green: #00ff00;
+            --panel-bg: #0d0d0d; --skin-tone: #f3c3ad; --hair-color: #d4a017;
+            --clothing-color: #1a1a1a;
+        }
+        
+        /* FORCE DARK MODE IMMEDIATELY */
+        html, body { 
+            margin: 0; padding: 0; 
+            background-color: #000000 !important; 
+            color: white !important;
+            font-family: 'Rajdhani', sans-serif; 
+            height: 100%; width: 100%; overflow: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .screen { 
+            display: none; height: 100vh; width: 100vw; 
+            flex-direction: column; position: absolute; 
+            top: 0; left: 0; background: #000000; z-index: 10; 
+        }
+
+        .active { display: flex !important; }
+        .centered { align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .card-panel { background: var(--panel-bg); border: 1px solid #222; padding: 35px; border-radius: 12px; width: 100%; max-width: 400px; }
+        
+        .btn { 
+            background: transparent; border: 2px solid var(--accent-cyan); 
+            color: var(--accent-cyan); padding: 15px; cursor: pointer; 
+            font-family: 'Orbitron', sans-serif; font-weight: bold; width: 100%; margin-top: 10px;
+        }
+        .btn:hover { background: var(--accent-cyan); color: black; box-shadow: 0 0 20px var(--accent-cyan); }
+
+        /* 3D ENGINE STYLE */
+        #avatar-preview-window { 
+            width: 100%; height: 420px; background: radial-gradient(circle, #222, #000); 
+            perspective: 1000px; display: flex; align-items: center; justify-content: center; 
+            border-radius: 15px; margin-bottom: 25px; border: 1px solid #333;
+        }
+        .scene { width: 200px; height: 350px; transform-style: preserve-3d; }
+        .pivot { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
+        .cube { position: absolute; transform-style: preserve-3d; }
+        .face { position: absolute; background: var(--skin-tone); border: 1px solid rgba(0,0,0,0.2); box-sizing: border-box; }
+        .head { width: 50px; height: 50px; left: 75px; top: 20px; }
+        .torso { width: 90px; height: 110px; left: 55px; top: 75px; }
+        .arm-l { width: 35px; height: 110px; left: 15px; top: 75px; }
+        .arm-r { width: 35px; height: 110px; left: 150px; top: 75px; }
+        .leg-l { width: 40px; height: 120px; left: 55px; top: 185px; }
+        .leg-r { width: 40px; height: 120px; left: 105px; top: 185px; }
+        #hair-system { position: absolute; width: 50px; height: 50px; transform-style: preserve-3d; display: none; }
+        .hair-clump { position: absolute; transform-style: preserve-3d; }
+        .hc-face { position: absolute; background: var(--hair-color); }
+        .clothing-layer { position: absolute; transform-style: preserve-3d; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-screen" class="screen active centered">
+        <h1 style="font-size: 3.5rem; color: var(--accent-cyan); margin: 0;">VIBERO</h1>
+        <p style="color: #666; margin-bottom: 30px;">NEXT-GEN 3D SOCIAL</p>
+        <button class="btn" style="max-width:300px" onclick="showScreen('signup-screen')">JOIN VIBERO (7+)</button>
+    </div>
+
+    <div id="signup-screen" class="screen centered">
+        <div class="card-panel">
+            <h2>CREATE ACCOUNT</h2>
+            <input type="text" id="reg-user" placeholder="Username" style="width:100%; padding:10px; margin-bottom:10px; background:#111; color:white; border:1px solid #333;">
+            <input type="number" id="reg-year" placeholder="Birth Year (YYYY)" style="width:100%; padding:10px; margin-bottom:10px; background:#111; color:white; border:1px solid #333;">
+            <button class="btn" onclick="handleSignup()">START CREATING</button>
+        </div>
+    </div>
+
+    <div id="home-screen" class="screen">
+        <div style="padding:25px; border-bottom:1px solid #222; display:flex; justify-content:space-between; align-items:center;">
+            <h2 style="color: var(--accent-cyan); margin:0;">VIBERO</h2>
+            <div id="display-name" style="color:var(--accent-cyan); font-weight:bold;">USER</div>
+        </div>
+        <div class="centered" style="flex:1">
+            <h1>DASHBOARD</h1>
+            <button class="btn" style="max-width:300px" onclick="showScreen('avatar-screen')">OPEN AVATAR LABS</button>
+        </div>
+    </div>
+
+    <div id="avatar-screen" class="screen">
+        <div style="padding:20px; display: flex; flex-direction: column; align-items: center;">
+            <div id="avatar-preview-window"><div class="scene"><div class="pivot" id="char-mesh"></div></div></div>
+            <button class="btn" style="max-width:300px" onclick="toggleEq('hair')">TOGGLE HAIR</button>
+            <button class="btn" style="max-width:300px" onclick="toggleEq('hoodie')">TOGGLE HOODIE</button>
+            <button class="btn" style="max-width:300px; border-color:#444" onclick="showScreen('home-screen')">BACK</button>
+        </div>
+    </div>
+
+    <script>
+        let eq = { hair: false, hoodie: false };
+        function showScreen(id) { 
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
+            document.getElementById(id).classList.add('active');
+        }
+
+        function handleSignup() {
+            const u = document.getElementById('reg-user').value.toUpperCase();
+            const y = parseInt(document.getElementById('reg-year').value);
+            if(2026 - y < 7) { alert("Vibero is 7+ only."); return; }
+            if(!u) { alert("Enter a username."); return; }
+            document.getElementById('display-name').innerText = u; 
+            showScreen('home-screen'); initAvatar();
+        }
+
+        function createCube(w, h, d, className) {
+            const cube = document.createElement('div'); cube.className = 'cube ' + className;
+            cube.style.width = w + 'px'; cube.style.height = h + 'px';
+            const faces = [{t:`translateZ(${d/2}px)`,w,h},{t:`rotateY(180deg) translateZ(${d/2}px)`,w,h},{t:`rotateY(-90deg) translateZ(${w/2}px)`,w:d,h},{t:`rotateY(90deg) translateZ(${w/2}px)`,w:d,h},{t:`rotateX(90deg) translateZ(${d/2}px)`,w,h:d},{t:`rotateX(-90deg) translateZ(${h-d/2}px)`,w,h:d}];
+            faces.forEach(f => { const div = document.createElement('div'); div.className='face'; div.style.width=f.w+'px'; div.style.height=f.h+'px'; div.style.transform=f.t; cube.appendChild(div); });
+            return cube;
+        }
+
+        function createClump(w, h, d, x, y, z, rx, ry) {
+            const c = document.createElement('div'); c.className="hair-clump"; c.style.width=w+"px"; c.style.height=h+"px"; c.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+            const fcs = [{t:`translateZ(${d/2}px)`,w,h},{t:`rotateY(180deg) translateZ(${d/2}px)`,w,h},{t:`rotateY(-90deg) translateZ(${w/2}px)`,w:d,h},{t:`rotateY(90deg) translateZ(${w/2}px)`,w:d,h}];
+            fcs.forEach(f => { const div = document.createElement('div'); div.className="hc-face"; div.style.width=f.w+"px"; div.style.height=f.h+"px"; div.style.transform=f.t; c.appendChild(div); });
+            return c;
+        }
+
+        function initAvatar() {
+            const mesh = document.getElementById('char-mesh'); mesh.innerHTML = "";
+            const parts = [{n:'head',w:50,h:50,d:50},{n:'torso',w:90,h:110,d:45},{n:'arm-l',w:35,h:110,d:35},{n:'arm-r',w:35,h:110,d:35},{n:'leg-l',w:40,h:120,d:40},{n:'leg-r',w:40,h:120,d:40}];
+            parts.forEach(p => {
+                const c = createCube(p.w, p.h, p.d, p.n);
+                if(p.n === 'head') { const h = document.createElement('div'); h.id="hair-system"; c.appendChild(h); }
+                if(['torso','arm-l','arm-r'].includes(p.n)) {
+                    const shell = createCube(p.w*1.12, p.h*1.12, p.d*1.12, 'clothing-layer');
+                    shell.style.left="-5px"; shell.style.top="-5px";
+                    shell.querySelectorAll('.face').forEach(f => { f.style.background = '#1a1a1a'; f.style.borderColor = 'cyan'; });
+                    c.appendChild(shell);
+                }
+                mesh.appendChild(c);
+            });
+        }
+
+        function toggleEq(t) {
+            eq[t] = !eq[t];
+            if(t === 'hair') {
+                const s = document.getElementById('hair-system'); s.innerHTML = ""; s.style.display = eq.hair?'block':'none';
+                if(eq.hair) {
+                    for(let i=0;i<40;i++) { 
+                        const a=(i/40)*360; const rad=20; 
+                        s.appendChild(createClump(15,50,10,Math.cos(a*Math.PI/180)*rad+17,-5,Math.sin(a*Math.PI/180)*rad+17,15,a)); 
+                    }
+                }
+            }
+            if(t === 'hoodie') document.querySelectorAll('.clothing-layer').forEach(l => l.style.display = eq.hoodie?'block':'none');
+        }
+
+        let rot = 0; setInterval(() => { rot += 1.5; const m = document.getElementById('char-mesh'); if(m) m.style.transform = `rotateY(${rot}deg)`; }, 30);
+        window.onload = () => { showScreen('welcome-screen'); };
+    </script>
+</body>
+</html>
